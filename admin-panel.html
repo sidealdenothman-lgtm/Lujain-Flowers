@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إدارة لجين فلاورز</title>
+    <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+
+    <div class="admin-layout">
+
+        <aside class="sidebar">
+            <img src="assets/logo.png" alt="لجين فلاورز">
+
+            <h2>لوحة التحكم</h2>
+
+</button>
+            <nav>
+                <button class="active" data-section="dashboard">الرئيسية</button>
+                <button data-section="products">إدارة المنتجات</button>
+                <button data-section="categories">إدارة الأقسام</button>
+                <button data-section="branches">إعدادات الفرع</button>
+                <button data-section="bulk-import">
+    استيراد الصور بالجملة
+            </nav>
+        </aside>
+
+        <main class="admin-content">
+
+            <header class="admin-header">
+                <h1>مرحباً بك في إدارة لجين فلاورز</h1>
+                <button id="logout-button">تسجيل الخروج</button>
+            </header>
+
+            <section id="dashboard" class="admin-section active">
+                <h2>الرئيسية</h2>
+                <p>من هنا يمكنك إدارة محتوى كتالوج لجين فلاورز.</p>
+            </section>
+
+           <section id="products" class="admin-section">
+
+    <h2>إدارة المنتجات</h2>
+    <p>إضافة وتنظيم منتجات لجين فلاورز</p>
+
+    <button type="button" id="show-product-form">
+        + إضافة منتج جديد
+    </button>
+
+    <form id="product-form" hidden>
+
+        <h3>بيانات المنتج</h3>
+
+        <label for="product-name">اسم المنتج</label>
+        <input
+            type="text"
+            id="product-name"
+            placeholder="مثلاً: باقة ورد أحمر"
+            required
+        >
+
+        <label for="product-description">وصف المنتج</label>
+        <textarea
+            id="product-description"
+            placeholder="اكتب وصفاً جميلاً للمنتج"
+            required
+        ></textarea>
+
+        <label for="product-category">القسم</label>
+        <select id="product-category" required>
+            <option value="">اختر القسم</option>
+            <option value="natural">باقات ورد طبيعي</option>
+            <option value="arrangements">تنسيقات الورد</option>
+            <option value="events">كوشة المناسبات</option>
+            <option value="cars">تنسيقات السيارات</option>
+            <option value="bridal-bouquets">مسكة عروس</option>
+            <option value="taboriyat">تابوريات</option>
+            <option value="graduation">تخرج</option>
+            <option value="gold-stands">ستاندات ذهب</option>
+            <option value="groom-tray">صينية عريس</option>
+            <option value="newborn">تنسيقات ولادة</option>
+            <option value="halls">صالات</option>
+            <option value="balloons">بوالين</option>
+        </select>
+
+        <label for="product-image">صور المنتج</label>
+
+<input
+    type="file"
+    id="product-image"
+    accept="image/*"
+    multiple
+>
+
+<p>يمكنك اختيار عدة صور للمنتج الواحد.</p>
+
+<div id="product-images-preview"></div>
+
+        <button type="submit">حفظ المنتج</button>
+        <button type="button" id="cancel-product-form">
+            إلغاء
+        </button>
+
+    </form>
+
+    <div id="products-list"></div>
+
+</section>
+
+            <section id="categories" class="admin-section">
+
+    <h2>إدارة الأقسام</h2>
+    <p>إضافة وتعديل وتنظيم أقسام لجين فلاورز</p>
+
+    <form id="category-form">
+
+        <label for="category-name">اسم القسم</label>
+        <input
+            type="text"
+            id="category-name"
+            placeholder="مثلاً: باقات ورد طبيعي"
+            required
+        >
+
+        <label for="category-id">معرّف القسم بالإنجليزية</label>
+        <input
+            type="text"
+            id="category-id"
+            placeholder="مثلاً: natural"
+            required
+        >
+
+        <button type="submit" id="save-category-button">
+            إضافة القسم
+        </button>
+
+        <button type="button" id="cancel-category-edit" hidden>
+            إلغاء التعديل
+        </button>
+
+    </form>
+
+    <h3>الأقسام الحالية</h3>
+    <div id="categories-list"></div>
+
+</section>
+            <section id="branches" class="admin-section">
+
+    <h2>إعدادات الفروع</h2>
+    <p>إدارة بيانات التواصل والعناوين وباركود شام كاش لكل فرع.</p>
+
+    <!-- الفرع الأول -->
+    <div class="branch-settings-card">
+
+        <h3>الفرع الأول - التل</h3>
+
+        <label for="branch1-name">اسم الفرع</label>
+        <input
+            id="branch1-name"
+            type="text"
+            value="lujain flowers"
+        >
+
+        <label for="branch1-whatsapp">رقم واتساب الفرع</label>
+        <input
+            id="branch1-whatsapp"
+            type="tel"
+            value="0966242463"
+        >
+
+        <label for="branch1-address">عنوان الفرع</label>
+        <input
+            id="branch1-address"
+            type="text"
+            value="التل ـ موقف ليالينا"
+        >
+
+        <label for="branch1-map">رابط موقع الفرع على Google Maps</label>
+        <input
+            id="branch1-map"
+            type="url"
+            value="https://maps.app.goo.gl/gE4aAF8Uhq7jATkg7"
+        >
+
+        <label for="branch1-qr">باركود شام كاش</label>
+        <input
+            id="branch1-qr"
+            type="file"
+            accept="image/jpeg,image/png,image/webp"
+        >
+
+        <img
+            id="branch1-qr-preview"
+            alt="معاينة باركود الفرع الأول"
+            hidden
+            width="180"
+        >
+
+        <button type="button" id="save-branch1">
+            حفظ بيانات الفرع الأول
+        </button>
+
+    </div>
+
+    <hr>
+
+    <!-- الفرع الثاني -->
+    <div class="branch-settings-card">
+
+        <h3>الفرع الثاني - زملكا</h3>
+
+        <label for="branch2-name">اسم الفرع</label>
+        <input
+            id="branch2-name"
+            type="text"
+            value="lujain flowers"
+        >
+
+        <label for="branch2-whatsapp">رقم واتساب الفرع</label>
+        <input
+            id="branch2-whatsapp"
+            type="tel"
+            value="0960050019"
+        >
+
+        <label for="branch2-address">عنوان الفرع</label>
+        <input
+            id="branch2-address"
+            type="text"
+            value="زملكا ـ الساحة"
+        >
+
+        <label for="branch2-map">رابط موقع الفرع على Google Maps</label>
+        <input
+            id="branch2-map"
+            type="url"
+            value="https://maps.app.goo.gl/npnmSkT8vBMo8kEN7"
+        >
+
+        <label for="branch2-qr">باركود شام كاش</label>
+        <input
+            id="branch2-qr"
+            type="file"
+            accept="image/jpeg,image/png,image/webp"
+        >
+
+        <img
+            id="branch2-qr-preview"
+            alt="معاينة باركود الفرع الثاني"
+            hidden
+            width="180"
+        >
+
+        <button type="button" id="save-branch2">
+            حفظ بيانات الفرع الثاني
+        </button>
+
+    </div>
+
+</section>
+                <section id="bulk-import" class="admin-section">
+
+    <h2>استيراد الصور بالجملة</h2>
+
+    <p>
+        استيراد صور لجين فلاورز وتصنيفها حسب الأقسام.
+    </p>
+
+    <div class="bulk-import-container">
+
+        <label for="bulk-folder">
+            اختر المجلد الرئيسي للصور
+        </label>
+
+        <input
+            type="file"
+            id="bulk-folder"
+            webkitdirectory
+            directory
+            multiple
+            accept="image/webp"
+        >
+
+        <p>
+            اختر المجلد الذي يحتوي على مجلدات الأقسام العشرة.
+        </p>
+<button type="button" id="scan-folder-button">
+    فحص المجلد
+</button>
+
+<button type="button" id="confirm-scan-button" disabled>
+    تأكيد الفحص
+</button>
+
+<button type="button" id="test-upload-button" disabled>
+    رفع 5 صور تجريبية
+</button>
+
+<button type="button" id="save-test-records-button">
+    حفظ سجلات الصور العشرين
+</button>
+        <div id="bulk-import-summary"></div>
+
+        <div id="bulk-import-progress"></div>
+<div id="bulk-images-preview" class="bulk-images-preview"></div>
+<!-- تحويل الصور المرفوعة إلى منتجات -->
+<div class="bulk-convert-box">
+
+    <h3>تحويل الصور إلى منتجات</h3>
+
+    <p>
+        بعد اكتمال رفع الصور، اضغط الزر لإنشاء منتج مستقل
+        لكل صورة وربطه بالقسم الصحيح.
+    </p>
+
+    <button
+        type="button"
+        id="convert-images-button"
+    >
+        تحويل الصور المرفوعة إلى منتجات
+    </button>
+
+    <div
+        id="convert-products-progress"
+        style="margin-top: 15px;"
+    ></div>
+
+    <div
+        id="convert-products-summary"
+        style="margin-top: 10px;"
+    ></div>
+
+</div>
+    </div>
+
+</section>
+        </main>
+
+    </div>
+    <script type="module" src="js/admin-panel.js"></script>
+    <script type="module" src="js/bulk-import.js"></script>
+</body>
+</html>

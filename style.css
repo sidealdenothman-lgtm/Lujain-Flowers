@@ -1,0 +1,992 @@
+/* =========================================
+   LUJAIN FLOWERS - FINAL MAIN DESIGN
+========================================= */
+
+/* إعدادات عامة */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    width: 100%;
+    min-height: 100%;
+    overflow-x: hidden;
+}
+
+body {
+    width: 100%;
+    min-height: 100vh;
+    font-family: Tahoma, Arial, sans-serif;
+    direction: rtl;
+    color: #493526;
+    background: #eadfce;
+    overflow-x: hidden;
+}
+
+/* =========================================
+   الصفحة الرئيسية
+========================================= */
+
+.welcome-page {
+    position: relative;
+    isolation: isolate;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 100%;
+    min-height: 100vh;
+    min-height: 100svh;
+
+    padding: 170px 20px 150px;
+
+    overflow: hidden;
+
+    background:
+        radial-gradient(
+            ellipse at 50% 35%,
+            #fff6e9 0%,
+            #ead9c5 55%,
+            #d8bea2 100%
+        );
+}
+
+/* الإطار الذهبي */
+.welcome-page::before {
+    content: "";
+    position: absolute;
+    inset: 13px;
+    border: 1px solid rgba(178, 132, 61, 0.55);
+    border-radius: 8px;
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* =========================================
+   المحتوى الرئيسي
+========================================= */
+
+.welcome-content {
+    position: relative;
+    z-index: 2;
+
+    width: 100%;
+    max-width: 850px;
+    min-width: 0;
+
+    margin: 0 auto;
+    padding: 25px 15px;
+
+    text-align: center;
+}
+
+/* =========================================
+   اللوغو
+========================================= */
+
+.main-logo {
+    display: block;
+    width: min(100%, 580px);
+    max-width: 100%;
+    height: auto;
+    margin: 0 auto 12px;
+    object-fit: contain;
+}
+
+/* العبارة أسفل اللوغو */
+.brand-slogan {
+    color: #99713d;
+    font-size: 21px;
+    font-weight: bold;
+    line-height: 1.8;
+
+    margin-bottom: 35px;
+    letter-spacing: 1px;
+}
+
+/* =========================================
+   العنوان الرئيسي
+========================================= */
+
+.welcome-content h1 {
+    width: 100%;
+
+    color: #513b2c;
+    font-size: clamp(24px, 4vw, 38px);
+    line-height: 1.7;
+
+    margin-bottom: 22px;
+
+    overflow-wrap: break-word;
+}
+
+/* العبارة الرئيسية */
+.welcome-content h2 {
+    width: 100%;
+
+    color: #99713d;
+    font-size: clamp(18px, 3vw, 27px);
+    font-weight: 600;
+    line-height: 1.9;
+
+    margin-bottom: 12px;
+
+    overflow-wrap: break-word;
+}
+
+/* =========================================
+   الزخرفة الوسطية
+========================================= */
+
+.decor-middle {
+    position: relative;
+    display: block;
+    width: 95px;
+    max-width: 100%;
+    height: auto;
+    margin: 5px auto 12px;
+    object-fit: contain;
+}
+
+/* =========================================
+   وصف الكتالوج
+========================================= */
+
+.welcome-description {
+    width: 100%;
+    max-width: 430px;
+
+    color: #725b48;
+    font-size: 17px;
+    line-height: 2;
+
+    margin: 0 auto 32px;
+
+    overflow-wrap: break-word;
+}
+
+/* =========================================
+   زر اكتشفوا تشكيلتنا
+========================================= */
+
+.explore-button {
+    display: inline-block;
+
+    max-width: 100%;
+    padding: 16px 48px;
+
+    color: #f6e6c8;
+    background: linear-gradient(
+        135deg,
+        #785638,
+        #493322
+    );
+
+    text-decoration: none;
+    font-size: 18px;
+    font-weight: bold;
+
+    border: 1px solid #c6a36b;
+    border-radius: 50px;
+
+    box-shadow: 0 6px 18px rgba(70, 45, 25, 0.18);
+
+    transition: transform 0.3s ease,
+                background 0.3s ease,
+                box-shadow 0.3s ease;
+}
+
+.explore-button:hover {
+    transform: translateY(-3px);
+
+    background: linear-gradient(
+        135deg,
+        #99713d,
+        #60432b
+    );
+
+    box-shadow: 0 9px 22px rgba(70, 45, 25, 0.25);
+}
+
+/* =========================================
+   الصور الزخرفية
+========================================= */
+
+.decor {
+    position: absolute;
+
+    display: block;
+
+    height: auto;
+    max-width: 100%;
+
+    object-fit: contain;
+
+    pointer-events: none;
+    user-select: none;
+
+    z-index: 1;
+}
+
+/* الزخارف العلوية */
+/* الزخارف العلوية */
+.decor-top-left {
+    top: 8px;
+    left: 8px;
+    width: 105px;
+}
+
+.decor-top-right {
+    top: 8px;
+    right: 8px;
+    width: 105px;
+}
+
+.decor-top-center {
+    top: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: clamp(150px, 25vw, 280px);
+}
+
+/* الزخارف السفلية */
+/* الزخارف السفلية */
+.decor-bottom-left {
+    bottom: 8px;
+    left: 8px;
+    width: 105px;
+}
+
+.decor-bottom-right {
+    bottom: 8px;
+    right: 8px;
+    width: 105px;
+}
+
+.decor-bottom-center {
+    bottom: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: clamp(150px, 27vw, 300px);
+}
+
+/* =========================================
+   تحسين الهاتف
+========================================= */
+
+@media (max-width: 600px) {
+
+    .welcome-page {
+        padding: 125px 18px 115px;
+    }
+
+    .welcome-page::before {
+        inset: 8px;
+    }
+
+    .welcome-content {
+        padding: 18px 5px;
+    }
+
+    .main-logo {
+        width: min(95%, 360px);
+        margin-bottom: 8px;
+    }
+
+    .brand-slogan {
+        font-size: 18px;
+        margin-bottom: 25px;
+    }
+
+    .welcome-content h1 {
+        font-size: 24px;
+        line-height: 1.8;
+        margin-bottom: 17px;
+    }
+
+    .welcome-content h2 {
+        font-size: 18px;
+        line-height: 1.9;
+        margin-bottom: 8px;
+    }
+
+    .decor-middle {
+        width: 125px;
+        margin: 8px auto 14px;
+    }
+
+    .welcome-description {
+        font-size: 15px;
+        line-height: 2;
+        margin-bottom: 25px;
+    }
+
+    .explore-button {
+        width: 90%;
+        max-width: 320px;
+        padding: 14px 15px;
+        font-size: 16px;
+    }
+
+    .decor-top-left,
+    .decor-top-right {
+        top: 7px;
+        width: 82px;
+    }
+
+    .decor-top-center {
+        top: 5px;
+        width: 125px;
+    }
+
+    .decor-bottom-left,
+    .decor-bottom-right {
+        bottom: 7px;
+        width: 82px;
+    }
+
+    .decor-bottom-center {
+        bottom: 5px;
+        width: 150px;
+    }
+}
+
+/* الشاشات الصغيرة جداً */
+@media (max-width: 360px) {
+
+    .welcome-page {
+        padding: 115px 14px 105px;
+    }
+
+    .decor-top-left,
+.decor-top-right,
+.decor-bottom-left,
+.decor-bottom-right {
+    width: 85px;
+}
+
+    .decor-top-center {
+        width: 105px;
+    }
+
+    .decor-bottom-center {
+        width: 125px;
+    }
+
+    .welcome-content h1 {
+        font-size: 22px;
+    }
+
+    .welcome-content h2 {
+        font-size: 17px;
+    }
+}
+/* الخطوط الذهبية الفاصلة */
+.gold-divider {
+    display: block;
+    height: auto;
+    object-fit: contain;
+    margin-left: auto;
+    margin-right: auto;
+    pointer-events: none;
+    filter: brightness(1.2) saturate(1.25)
+        drop-shadow(0 1px 2px rgba(160, 105, 25, 0.25));
+}
+
+.gold-line-1 {
+    width: 170px;
+    margin-top: -25px;
+    margin-bottom: 25px;
+}
+
+.gold-line-2 {
+    width: 145px;
+    margin-top: -12px;
+    margin-bottom: 12px;
+}
+
+.gold-line-3 {
+    width: 190px;
+    margin-top: 5px;
+    margin-bottom: 15px;
+}
+
+/* ضبط الخطوط على الهاتف */
+@media (max-width: 600px) {
+    .gold-line-1 {
+        width: 135px;
+    }
+
+    .gold-line-2 {
+        width: 120px;
+    }
+
+    .gold-line-3 {
+        width: 155px;
+    }
+}
+/* رفع محتوى الصفحة الرئيسية قليلاً */
+.welcome-content {
+    transform: translateY(-22px);
+}
+/* =================================
+   تصميم كتالوج Lujain Flowers
+================================= */
+
+.catalog-page {
+    min-height: 100vh;
+    padding: 35px 20px 60px;
+    background:
+        radial-gradient(ellipse at top, #fff8ed, transparent 65%),
+        linear-gradient(135deg, #eee2d3, #d8c3ac);
+    color: #493526;
+}
+
+.catalog-header {
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto 45px;
+}
+
+.catalog-logo {
+    display: block;
+    width: min(75%, 300px);
+    height: auto;
+    object-fit: contain;
+    margin: 0 auto 15px;
+}
+
+.catalog-header h1 {
+    color: #513b2c;
+    font-size: clamp(25px, 4vw, 36px);
+    margin-bottom: 12px;
+}
+
+.catalog-header p {
+    color: #99713d;
+    font-size: 17px;
+    line-height: 1.8;
+}
+
+.categories-section {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.categories-section > h2 {
+    text-align: center;
+    color: #99713d;
+    font-size: 25px;
+    margin-bottom: 28px;
+}
+
+.categories-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+}
+
+.category-card {
+    min-height: 115px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px 12px;
+    text-align: center;
+    text-decoration: none;
+    color: #60432b;
+    background: rgba(255, 250, 241, 0.85);
+    border: 1px solid #c6a36b;
+    border-radius: 18px;
+    box-shadow: 0 5px 16px rgba(70, 45, 25, 0.10);
+    transition: 0.3s ease;
+}
+
+.category-card h3 {
+    font-size: 19px;
+    line-height: 1.7;
+}
+
+.category-card:hover {
+    transform: translateY(-4px);
+    background: #fff5e5;
+    box-shadow: 0 8px 20px rgba(70, 45, 25, 0.16);
+}
+
+@media (max-width: 480px) {
+    .catalog-page {
+        padding: 25px 15px 45px;
+    }
+
+    .catalog-header {
+        margin-bottom: 35px;
+    }
+
+    .catalog-logo {
+        width: min(80%, 260px);
+    }
+
+    .categories-grid {
+        gap: 12px;
+    }
+
+    .category-card {
+        min-height: 105px;
+        padding: 14px 8px;
+    }
+
+    .category-card h3 {
+        font-size: 16px;
+    }
+}
+/* تنسيق بطاقات أقسام الكتالوج */
+
+
+.category-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow: hidden;
+    min-height: auto;
+    padding: 0 0 14px;
+    background: #fffaf2;
+    border: 1px solid #e6d2b5;
+    border-radius: 16px;
+    text-decoration: none;
+    box-shadow: 0 3px 10px rgba(90, 60, 30, 0.08);
+}
+
+.category-card img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+}
+
+.category-card h3 {
+    margin: 12px 5px 0;
+    color: #6b4729;
+    font-size: 15px;
+    font-weight: 700;
+    text-align: center;
+}
+
+@media (min-width: 700px) {
+    .categories-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
+/* ترتيب الأقسام على شاشات الموبايل */
+@media (max-width: 699px) {
+    .categories-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+    }
+
+    .category-card img {
+        aspect-ratio: 1 / 1;
+        object-fit: cover;
+    }
+
+    .category-card h3 {
+        font-size: 14px;
+        margin: 10px 4px;
+    }
+}
+@media screen and (max-width: 699px) {
+    .categories-section .categories-grid {
+        display: grid !important;
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+        gap: 12px !important;
+        width: 100% !important;
+    }
+
+    .categories-section .category-card {
+        width: 100% !important;
+        min-width: 0 !important;
+    }
+
+    .categories-section .category-card img {
+        width: 100% !important;
+        aspect-ratio: 1 / 1 !important;
+        object-fit: cover;
+    }
+}
+/* ضبط عرض أقسام الكتالوج */
+.categories-grid {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 12px !important;
+    width: 100%;
+}
+
+.category-card {
+    width: 100%;
+    min-width: 0;
+}
+
+.category-card img {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+}
+.all-products-button {
+    display: block;
+    width: fit-content;
+    margin: 25px auto 10px;
+    padding: 12px 30px;
+    background: linear-gradient(135deg, #99713d, #684322);
+    color: #fffaf2;
+    text-decoration: none;
+    border: 1px solid #c6a36b;
+    border-radius: 30px;
+    font-size: 15px;
+    font-weight: bold;
+    text-align: center;
+    transition: 0.3s ease;
+}
+
+.all-products-button:hover {
+    background: #513b2c;
+    transform: translateY(-2px);
+}
+/* تنسيق قسم المنتجات */
+.products-section {
+    max-width: 1000px;
+    margin: 45px auto;
+    padding: 25px 15px;
+    display: block;
+}
+
+.products-section.active {
+    display: block;
+}
+
+.products-section h2 {
+    text-align: center;
+    color: #99713d;
+    font-size: 25px;
+    margin-bottom: 25px;
+}
+
+.products-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+}
+
+.product-card {
+    background: #fffaf2;
+    border: 1px solid #e6d2b5;
+    border-radius: 16px;
+    overflow: hidden;
+    text-align: center;
+    box-shadow: 0 3px 10px rgba(90, 60, 30, 0.08);
+}
+
+.product-card img {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    display: block;
+}
+
+.product-card h3 {
+    color: #6b4729;
+    font-size: 15px;
+    padding: 12px 8px;
+}
+
+@media (min-width: 700px) {
+    .products-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
+/* تنسيق قسم بيانات الفرع */
+.branch-section {
+    text-align: center;
+    padding: 25px 15px;
+    margin: 25px 0;
+}
+
+/* اسم الفرع */
+#branch-name {
+    color: #79502f;
+    margin-bottom: 10px;
+}
+
+/* عنوان الفرع */
+#branch-address {
+    color: #8b735e;
+    margin-bottom: 15px;
+}
+
+/* أزرار التواصل */
+.branch-actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+    margin: 15px 0 25px;
+}
+
+.branch-actions a {
+    color: #fff;
+    background: #79502f;
+    padding: 12px 18px;
+    border-radius: 25px;
+    text-decoration: none;
+}
+
+/* باركود شام كاش */
+.branch-payment {
+    text-align: center;
+    margin: 20px auto;
+}
+
+#branch-qr {
+    display: block;
+    width: 220px;
+    max-width: 85%;
+    height: auto;
+    margin: 15px auto;
+    object-fit: contain;
+    border-radius: 10px;
+}
+/* ==============================
+   صفحة تفاصيل المنتج
+============================== */
+
+.product-details-page {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+#product-details {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 35px;
+    align-items: start;
+    background: #fffaf3;
+    border: 1px solid #e8d9c4;
+    border-radius: 18px;
+    padding: 25px;
+    margin: 25px auto;
+    box-shadow: 0 5px 20px rgba(90, 60, 30, 0.07);
+}
+
+/* الصورة الرئيسية */
+
+#product-gallery {
+    width: 100%;
+    min-width: 0;
+}
+
+#main-product-image {
+    display: block;
+    width: 100%;
+    height: 430px;
+    object-fit: contain;
+    background: #f5eee4;
+    border-radius: 14px;
+}
+
+/* الصور المصغرة */
+
+#product-thumbnails {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+#product-thumbnails img {
+    width: 75px;
+    height: 75px;
+    object-fit: cover;
+    border-radius: 9px;
+    border: 2px solid #dfc69f;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+#product-thumbnails img:hover {
+    border-color: #a77a3e;
+    transform: translateY(-3px);
+}
+
+/* معلومات المنتج */
+
+.product-information {
+    padding: 15px 5px;
+}
+
+#detail-product-name {
+    color: #79502f;
+    font-size: 27px;
+    margin-bottom: 20px;
+}
+
+#detail-product-description {
+    color: #766657;
+    font-size: 17px;
+    line-height: 2;
+    white-space: pre-line;
+}
+
+/* زر الطلب */
+
+#order-product-whatsapp {
+    display: inline-block;
+    margin-top: 25px;
+    padding: 14px 28px;
+    background: #79502f;
+    color: white;
+    text-decoration: none;
+    border-radius: 30px;
+    font-size: 16px;
+    transition: 0.3s;
+}
+
+#order-product-whatsapp:hover {
+    background: #a77a3e;
+}
+
+/* رسالة التحميل */
+
+#product-loading {
+    text-align: center;
+    color: #79502f;
+    padding: 20px;
+}
+
+/* توافق الهواتف */
+
+@media (max-width: 768px) {
+
+    .product-details-page {
+        padding: 12px;
+    }
+
+    #product-details {
+        grid-template-columns: 1fr;
+        gap: 15px;
+        padding: 15px;
+    }
+
+    #main-product-image {
+        height: 320px;
+    }
+
+    #detail-product-name {
+        font-size: 23px;
+    }
+
+    #detail-product-description {
+        font-size: 15px;
+    }
+
+    #order-product-whatsapp {
+        display: block;
+        text-align: center;
+    }
+}
+/* زر العودة إلى الكتالوج */
+.back-to-catalog {
+    display: inline-block;
+    color: #79502f;
+    background: #f5ead9;
+    border: 1px solid #c9a66b;
+    padding: 11px 20px;
+    border-radius: 25px;
+    text-decoration: none;
+    font-size: 14px;
+    margin-bottom: 15px;
+    transition: 0.3s;
+}
+
+.back-to-catalog:hover {
+    background: #79502f;
+    color: #fff;
+}
+
+/* نافذة تكبير الصور */
+.image-lightbox {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    background: rgba(20, 15, 10, 0.93);
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.image-lightbox img {
+    max-width: 95%;
+    max-height: 85vh;
+    object-fit: contain;
+    border-radius: 10px;
+}
+
+#close-lightbox {
+    position: absolute;
+    top: 15px;
+    left: 20px;
+    width: 45px;
+    height: 45px;
+    border: 1px solid #c9a66b;
+    border-radius: 50%;
+    background: #79502f;
+    color: white;
+    font-size: 30px;
+    cursor: pointer;
+}
+
+/* تحسين عرض الصور على الهاتف */
+@media (max-width: 768px) {
+    .back-to-catalog {
+        display: block;
+        width: fit-content;
+        margin: 0 auto 15px;
+    }
+
+    .image-lightbox {
+        padding: 10px;
+    }
+}
+.product-sharing-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 25px;
+}
+
+.product-sharing-actions #order-product-whatsapp,
+.product-sharing-actions #share-product-whatsapp {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    text-align: center;
+    padding: 14px;
+    border-radius: 30px;
+    font-family: inherit;
+    font-size: 15px;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+#share-product-whatsapp {
+    background: transparent;
+    color: #79502f;
+    border: 1px solid #c9a66b;
+}
+
+#share-product-whatsapp:hover {
+    background: #f5ead9;
+}

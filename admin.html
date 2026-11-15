@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة تحكم لجين فلاورز</title>
+    <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+
+    <main class="admin-login">
+        <div class="admin-login-card">
+
+            <img src="assets/logo.png"
+                 alt="لجين فلاورز"
+                 class="admin-logo">
+
+            <p class="admin-subtitle">حيث تزهر المشاعر</p>
+
+            <h1>لوحة التحكم</h1>
+            <p>مرحباً بك في إدارة لجين فلاورز</p>
+
+            <form id="login-form">
+
+                <label for="email">البريد الإلكتروني</label>
+                <input
+                    type="email"
+                    id="email"
+                    placeholder="أدخل بريدك الإلكتروني"
+                    required
+                    autocomplete="username"
+                >
+
+                <label for="password">كلمة المرور</label>
+                <input
+                    type="password"
+                    id="password"
+                    placeholder="أدخل كلمة المرور"
+                    required
+                    autocomplete="current-password"
+                >
+
+                <button type="submit" id="login-button">
+                    تسجيل الدخول
+                </button>
+
+                <p id="login-message" role="status"></p>
+
+            </form>
+
+        </div>
+    </main>
+
+    <script type="module">
+        import { auth } from "./js/firebase.js";
+
+        import {
+            signInWithEmailAndPassword
+        } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
+
+        const loginForm = document.getElementById("login-form");
+        const loginButton = document.getElementById("login-button");
+        const loginMessage = document.getElementById("login-message");
+
+        loginForm.addEventListener("submit", async function(event) {
+            event.preventDefault();
+
+            const email = document.getElementById("email").value.trim();
+            const password = document.getElementById("password").value;
+
+            loginButton.disabled = true;
+            loginButton.textContent = "جارٍ التحقق...";
+            loginMessage.textContent = "";
+
+            try {
+                const userCredential = await signInWithEmailAndPassword(
+                    auth,
+                    email,
+                    password
+                );
+
+                loginMessage.textContent =
+                    "تم التحقق من بيانات الدخول بنجاح. جارٍ تجهيز صلاحيات المدير.";
+
+                loginMessage.style.color = "#39734a";
+
+                console.log("Authenticated user:", userCredential.user.uid);
+
+                window.location.href = "admin-panel.html";
+                // لن نفتح لوحة الإدارة قبل التحقق من صلاحيات المدير والفرع.
+
+            } catch (error) {
+
+                let message = "حدث خطأ، حاول مرة أخرى.";
+
+                if (
+                    error.code === "auth/invalid-credential" ||
+                    error.code === "auth/user-not-found" ||
+                    error.code === "auth/wrong-password"
+                ) {
+                    message = "البريد الإلكتروني أو كلمة المرور غير صحيحة.";
+                } else if (error.code === "auth/invalid-email") {
+                    message = "صيغة البريد الإلكتروني غير صحيحة.";
+                } else if (error.code === "auth/too-many-requests") {
+                    message = "محاولات كثيرة. يرجى الانتظار قليلاً.";
+                } else if (error.code === "auth/network-request-failed") {
+                    message = "تعذر الاتصال بالإنترنت.";
+                }
+
+                loginMessage.textContent = message;
+                loginMessage.style.color = "#b33a32";
+
+            } finally {
+                loginButton.disabled = false;
+                loginButton.textContent = "تسجيل الدخول";
+            }
+        });
+    </script>
+
+</body>
+</html>
