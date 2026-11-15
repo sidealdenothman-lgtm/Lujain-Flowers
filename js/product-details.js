@@ -50,6 +50,12 @@ async function loadProductDetails() {
         }
 
         const branch = branchSnapshot.data();
+        const sharedSnapshot = await getDoc(doc(db, "settings", "shared"));
+        let shared = sharedSnapshot.exists() ? sharedSnapshot.data() : {};
+        if (!sharedSnapshot.exists()) {
+            const legacyShared = await getDoc(doc(db, "branches", "branch1"));
+            if (legacyShared.exists()) shared = legacyShared.data();
+        }
 
         // عرض بيانات المنتج
         productName.textContent = product.name || "";
@@ -87,7 +93,7 @@ async function loadProductDetails() {
         }
 
         // إعداد طلب واتساب للفرع المحدد
-        let phone = String(branch.whatsapp || "").replace(/\D/g, "");
+        let phone = String(shared.whatsapp || "").replace(/\D/g, "");
 
 if (phone.startsWith("0")) {
     phone = "963" + phone.substring(1);

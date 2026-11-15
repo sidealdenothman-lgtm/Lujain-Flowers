@@ -30,6 +30,13 @@ currentBranchId = branchId;
         }
 
         const branch = branchSnapshot.data();
+        const sharedSnapshot = await getDoc(doc(db, "settings", "shared"));
+        // توافق رجعي: إن لم يوجد المستند المشترك بعد، نستخدم بيانات التواصل القديمة من الفرع الأول.
+        let shared = sharedSnapshot.exists() ? sharedSnapshot.data() : {};
+        if (!sharedSnapshot.exists()) {
+            const legacyShared = await getDoc(doc(db, "branches", "branch1"));
+            if (legacyShared.exists()) shared = legacyShared.data();
+        }
 
         const name = document.getElementById("branch-name");
         const address = document.getElementById("branch-address");
@@ -37,29 +44,16 @@ currentBranchId = branchId;
         const map = document.getElementById("branch-map");
         const qr = document.getElementById("branch-qr");
 
-        if (name) {
-            name.textContent = branch.name || "لجين فلاورز";
-        }
-
-        if (address) {
-            address.textContent = branch.address || "";
-        }
-
+        if (name) name.textContent = branch.name || (branchId === "branch1" ? "الفرع الأول" : "الفرع الثاني");
+        if (address) address.textContent = branch.address || "";
         if (whatsapp) {
-            let phone = String(branch.whatsapp || "").replace(/\D/g, "");
-
-if (phone.startsWith("0")) {
-    phone = "963" + phone.substring(1);
-}
-
-whatsapp.href = phone
-    ? `https://wa.me/${phone}`
-    : "#";
+            let phone = String(shared.whatsapp || "").replace(/\D/g, "");
+            if (phone.startsWith("0")) phone = "963" + phone.substring(1);
+            whatsapp.href = phone ? `https://wa.me/${phone}` : "#";
         }
-
         if (map) {
-            map.href = branch.mapUrl || "#";
-            map.style.display = branch.mapUrl ? "" : "none";
+            map.href = shared.mapUrl || "#";
+            map.style.display = shared.mapUrl ? "" : "none";
         }
 
         if (qr) {

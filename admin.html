@@ -65,8 +65,14 @@
         loginForm.addEventListener("submit", async function(event) {
             event.preventDefault();
 
-            const email = document.getElementById("email").value.trim();
+            const email = document.getElementById("email").value.trim().toLowerCase();
             const password = document.getElementById("password").value;
+
+            if (email !== "salerflowerlg@gmail.com") {
+                loginMessage.textContent = "هذا البريد غير مخوّل لإدارة المتجر.";
+                loginMessage.style.color = "#b33a32";
+                return;
+            }
 
             loginButton.disabled = true;
             loginButton.textContent = "جارٍ التحقق...";
