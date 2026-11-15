@@ -1,0 +1,350 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: Tahoma, Arial, sans-serif;
+    background: linear-gradient(135deg, #f7f0e5, #e8d8c2);
+    color: #4b3427;
+}
+
+.admin-login {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 25px;
+}
+
+.admin-login-card {
+    width: 100%;
+    max-width: 430px;
+    background: #fffdf9;
+    padding: 38px 30px;
+    border: 1px solid #d5b77c;
+    border-radius: 20px;
+    box-shadow: 0 12px 35px rgba(80, 55, 30, 0.12);
+    text-align: center;
+}
+
+.admin-logo {
+    display: block;
+    width: 190px;
+    max-width: 80%;
+    height: 110px;
+    object-fit: contain;
+    margin: 0 auto 12px;
+}
+
+.admin-subtitle {
+    color: #a17b3e;
+    font-size: 14px;
+}
+
+.admin-login-card h1 {
+    font-size: 27px;
+    margin: 15px 0 8px;
+    color: #68482d;
+}
+
+.admin-login-card > p {
+    line-height: 1.8;
+}
+
+#login-form {
+    text-align: right;
+    margin-top: 28px;
+}
+
+#login-form label {
+    display: block;
+    margin: 18px 0 8px;
+    font-weight: bold;
+}
+
+#login-form input {
+    width: 100%;
+    height: 48px;
+    padding: 12px;
+    border: 1px solid #d9c7aa;
+    border-radius: 9px;
+    background: #fff;
+    font-size: 15px;
+    outline: none;
+}
+
+#login-form input:focus {
+    border-color: #b18a4b;
+}
+
+#login-form button {
+    width: 100%;
+    height: 49px;
+    margin-top: 25px;
+    border: none;
+    border-radius: 9px;
+    background: #8b6536;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+#login-form button:hover {
+    background: #704d28;
+}
+
+#login-message {
+    text-align: center;
+    font-size: 14px;
+}
+
+/* ==============================
+   لوحة تحكم لجين فلاورز
+============================== */
+
+.admin-layout {
+    display: flex;
+    min-height: 100vh;
+    background: #f5eee4;
+    color: #5b4032;
+}
+
+/* القائمة الجانبية */
+
+.sidebar {
+    width: 260px;
+    min-height: 100vh;
+    padding: 30px 20px;
+    background: #6f4936;
+    color: #fff;
+    text-align: center;
+}
+
+.sidebar img {
+    width: 150px;
+    max-width: 100%;
+    margin-bottom: 20px;
+}
+
+.sidebar h2 {
+    color: #e8c78d;
+    margin-bottom: 35px;
+}
+
+.sidebar nav {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.sidebar nav button {
+    width: 100%;
+    padding: 14px;
+    border: none;
+    border-radius: 9px;
+    background: transparent;
+    color: #fff;
+    font-size: 15px;
+    cursor: pointer;
+    text-align: right;
+}
+
+.sidebar nav button:hover,
+.sidebar nav button.active {
+    background: #b58b58;
+    color: #fff;
+}
+
+/* المحتوى الرئيسي */
+
+.admin-content {
+    flex: 1;
+    padding: 30px;
+    min-width: 0;
+}
+
+.admin-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    flex-wrap: wrap;
+    margin-bottom: 30px;
+    padding: 22px;
+    background: #fff;
+    border-radius: 14px;
+    box-shadow: 0 4px 15px rgba(80, 55, 35, 0.07);
+}
+
+.admin-header h1 {
+    font-size: 22px;
+    color: #704b37;
+}
+
+.admin-header button,
+.admin-section button {
+    padding: 12px 22px;
+    border: none;
+    border-radius: 8px;
+    background: #a87543;
+    color: #fff;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.admin-header button:hover,
+.admin-section button:hover {
+    background: #80532f;
+}
+
+/* الأقسام */
+
+.admin-section {
+    display: none;
+    padding: 25px;
+    background: #fff;
+    border-radius: 14px;
+    box-shadow: 0 4px 15px rgba(80, 55, 35, 0.06);
+}
+
+.admin-section.active {
+    display: block;
+}
+
+.admin-section h2 {
+    margin-bottom: 20px;
+    color: #805638;
+}
+
+/* الحقول */
+
+.admin-section label {
+    display: block;
+    margin: 15px 0 8px;
+    font-weight: bold;
+}
+
+.admin-section input {
+    width: 100%;
+    max-width: 500px;
+    padding: 13px;
+    border: 1px solid #dfcdb8;
+    border-radius: 8px;
+    background: #fffdf9;
+    font-size: 15px;
+    outline: none;
+}
+
+.admin-section input:focus {
+    border-color: #b58b58;
+}
+
+/* الهواتف */
+
+@media (max-width: 700px) {
+    .admin-layout {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        width: 100%;
+        min-height: auto;
+        padding: 18px;
+    }
+
+    .sidebar img {
+        width: 110px;
+    }
+
+    .sidebar h2 {
+        margin-bottom: 18px;
+    }
+
+    .sidebar nav {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+    }
+
+    .sidebar nav button {
+        text-align: center;
+        padding: 12px 5px;
+        font-size: 13px;
+    }
+
+    .admin-content {
+        padding: 15px;
+    }
+
+    .admin-header {
+        padding: 16px;
+    }
+
+    .admin-header h1 {
+        font-size: 18px;
+    }
+
+    .admin-section {
+        padding: 18px;
+    }
+}
+/* =====================================
+   إدارة المنتجات والتعديل
+===================================== */
+
+.admin-product-card {
+    padding: 18px;
+    margin: 15px 0;
+    background: #fffdf9;
+    border: 1px solid #e5d5bf;
+    border-radius: 14px;
+}
+
+.admin-product-card img {
+    display: block;
+    margin: 12px 0;
+}
+
+.edit-product-button {
+    background: #8b7048 !important;
+    margin: 5px;
+}
+
+.delete-product-button {
+    background: #a65336 !important;
+    margin: 5px;
+}
+
+.admin-image-preview {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 7px;
+    margin: 8px;
+    padding: 9px;
+    background: #f8f1e8;
+    border: 1px solid #e1cfb5;
+    border-radius: 12px;
+    vertical-align: top;
+}
+
+.admin-image-preview img {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 9px;
+}
+
+.admin-image-preview small {
+    color: #805638;
+    font-weight: bold;
+}
+
+.admin-image-preview button {
+    background: #a65336 !important;
+    padding: 7px 12px !important;
+    font-size: 12px !important;
+}
