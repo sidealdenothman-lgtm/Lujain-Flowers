@@ -1,5 +1,8 @@
-import { db } from "./firebase.js";
+import { db, auth } from "./firebase.js";
 
+import {
+    onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
 import {
     collection,
     getDocs,
@@ -12,6 +15,29 @@ import {
 let categories = {};
 let products = [];
 let currentBranchId = "";
+let currentCategory = "all";
+
+// إظهار لوحة التحكم للمدير فقط
+const adminPanelLink = document.getElementById("admin-panel-link");
+
+onAuthStateChanged(auth, (user) => {
+
+    console.log("حالة تسجيل الدخول:", user);
+    console.log("بريد المستخدم:", user?.email);
+    console.log("عنصر زر الإدارة:", adminPanelLink);
+
+    if (
+        adminPanelLink &&
+        user &&
+        user.email === "salerflowerlg@gmail.com"
+    ) {
+        adminPanelLink.style.display = "inline-block";
+        console.log("تم إظهار زر الإدارة");
+    } else if (adminPanelLink) {
+        adminPanelLink.style.display = "none";
+        console.log("زر الإدارة مخفي");
+    }
+});
 // تحميل بيانات الفرع المحدد من الرابط
 async function loadBranchSettings() {
     try {
@@ -30,13 +56,6 @@ currentBranchId = branchId;
         }
 
         const branch = branchSnapshot.data();
-        const sharedSnapshot = await getDoc(doc(db, "settings", "shared"));
-        // توافق رجعي: إن لم يوجد المستند المشترك بعد، نستخدم بيانات التواصل القديمة من الفرع الأول.
-        let shared = sharedSnapshot.exists() ? sharedSnapshot.data() : {};
-        if (!sharedSnapshot.exists()) {
-            const legacyShared = await getDoc(doc(db, "branches", "branch1"));
-            if (legacyShared.exists()) shared = legacyShared.data();
-        }
 
         const name = document.getElementById("branch-name");
         const address = document.getElementById("branch-address");
@@ -44,16 +63,29 @@ currentBranchId = branchId;
         const map = document.getElementById("branch-map");
         const qr = document.getElementById("branch-qr");
 
-        if (name) name.textContent = branch.name || (branchId === "branch1" ? "الفرع الأول" : "الفرع الثاني");
-        if (address) address.textContent = branch.address || "";
-        if (whatsapp) {
-            let phone = String(shared.whatsapp || "").replace(/\D/g, "");
-            if (phone.startsWith("0")) phone = "963" + phone.substring(1);
-            whatsapp.href = phone ? `https://wa.me/${phone}` : "#";
+        if (name) {
+            name.textContent = branch.name || "لجين فلاورز";
         }
+
+        if (address) {
+            address.textContent = branch.address || "";
+        }
+
+        if (whatsapp) {
+            let phone = String(branch.whatsapp || "").replace(/\D/g, "");
+
+if (phone.startsWith("0")) {
+    phone = "963" + phone.substring(1);
+}
+
+whatsapp.href = phone
+    ? `https://wa.me/${phone}`
+    : "#";
+        }
+
         if (map) {
-            map.href = shared.mapUrl || "#";
-            map.style.display = shared.mapUrl ? "" : "none";
+            map.href = branch.mapUrl || "#";
+            map.style.display = branch.mapUrl ? "" : "none";
         }
 
         if (qr) {
@@ -81,6 +113,7 @@ currentBranchId = branchId;
 // عناصر صفحة الكتالوج
 const productsGrid = document.getElementById("products-grid");
 const productsTitle = document.getElementById("products-title");
+const productSearch = document.getElementById("product-search");
 
 // قراءة الأقسام من Firestore
 // قراءة الأقسام من Firestore
@@ -168,12 +201,23 @@ async function loadProducts() {
 
 // عرض المنتجات
 function displayProducts(category = "all") {
+    currentCategory = category;
     if (!productsGrid) return;
 
-    const filteredProducts = category === "all"
-        ? products
-        : products.filter(product => product.category === category);
+    const searchText = productSearch
+    ? productSearch.value.trim().toLowerCase()
+    : "";
 
+const filteredProducts = products.filter(product => {
+    const matchesCategory =
+        category === "all" || product.category === category;
+
+    const matchesSearch =
+        product.name.toLowerCase().includes(searchText) ||
+        product.description.toLowerCase().includes(searchText);
+
+    return matchesCategory && matchesSearch;
+});
     productsGrid.innerHTML = "";
 
     if (productsTitle) {
@@ -227,6 +271,13 @@ card.addEventListener("click", function () {
 
         card.append(title, description);
         productsGrid.appendChild(card);
+    });
+}
+// البحث الفوري أثناء الكتابة
+
+if (productSearch) {
+    productSearch.addEventListener("input", function () {
+        displayProducts(currentCategory);
     });
 }
 
