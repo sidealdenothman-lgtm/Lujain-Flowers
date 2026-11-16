@@ -1014,14 +1014,17 @@ body {
 /* مربع البحث عن المنتجات */
 .product-search {
     width: 100%;
-    max-width: 550px;
+    max-width: 100%;
     margin: 20px auto 30px;
-    position: relative;
+    padding: 0 12px;
+    box-sizing: border-box;
 }
 
 .product-search input {
+    display: block;
     width: 100%;
-    padding: 15px 45px 15px 15px;
+    height: 50px;
+    padding: 12px 18px;
     border: 1px solid #c49a52;
     border-radius: 30px;
     background: #fffdf9;
@@ -1035,8 +1038,4 @@ body {
 .product-search input:focus {
     border-color: #8b5a2b;
     box-shadow: 0 0 8px rgba(196, 154, 82, 0.25);
-}
-
-.product-search input::placeholder {
-    color: #a8957d;
 }
