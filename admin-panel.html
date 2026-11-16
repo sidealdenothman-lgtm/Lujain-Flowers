@@ -146,38 +146,115 @@
 </section>
             <section id="branches" class="admin-section">
 
-    <h2>إعدادات المتجر والفروع</h2>
-    <p>رقم واتساب ورابط الخريطة مشتركان للفرعين، بينما العنوان وباركود شام كاش مستقلان لكل فرع.</p>
+    <h2>إعدادات الفروع</h2>
+    <p>إدارة بيانات التواصل والعناوين وباركود شام كاش لكل فرع.</p>
 
+    <!-- الفرع الأول -->
     <div class="branch-settings-card">
-        <h3>بيانات التواصل المشتركة</h3>
-        <label for="shared-whatsapp">رقم واتساب المشترك</label>
-        <input id="shared-whatsapp" type="tel" value="0966242463">
-        <label for="shared-map">رابط Google Maps المشترك</label>
-        <input id="shared-map" type="url" value="https://maps.app.goo.gl/gE4aAF8Uhq7jATkg7">
-        <button type="button" id="save-shared-settings">حفظ بيانات التواصل المشتركة</button>
-    </div>
 
-    <hr>
-    <div class="branch-settings-card">
         <h3>الفرع الأول - التل</h3>
-        <label for="branch1-address">عنوان الفرع الأول</label>
-        <input id="branch1-address" type="text" value="التل ـ موقف ليالينا">
-        <label for="branch1-qr">باركود شام كاش للفرع الأول</label>
-        <input id="branch1-qr" type="file" accept="image/jpeg,image/png,image/webp">
-        <img id="branch1-qr-preview" alt="معاينة باركود الفرع الأول" hidden width="180">
-        <button type="button" id="save-branch1">حفظ بيانات الفرع الأول</button>
+
+        <label for="branch1-name">اسم الفرع</label>
+        <input
+            id="branch1-name"
+            type="text"
+            value="lujain flowers"
+        >
+
+        <label for="branch1-whatsapp">رقم واتساب الفرع</label>
+        <input
+            id="branch1-whatsapp"
+            type="tel"
+            value="0966242463"
+        >
+
+        <label for="branch1-address">عنوان الفرع</label>
+        <input
+            id="branch1-address"
+            type="text"
+            value="التل ـ موقف ليالينا"
+        >
+
+        <label for="branch1-map">رابط موقع الفرع على Google Maps</label>
+        <input
+            id="branch1-map"
+            type="url"
+            value="https://maps.app.goo.gl/gE4aAF8Uhq7jATkg7"
+        >
+
+        <label for="branch1-qr">باركود شام كاش</label>
+        <input
+            id="branch1-qr"
+            type="file"
+            accept="image/jpeg,image/png,image/webp"
+        >
+
+        <img
+            id="branch1-qr-preview"
+            alt="معاينة باركود الفرع الأول"
+            hidden
+            width="180"
+        >
+
+        <button type="button" id="save-branch1">
+            حفظ بيانات الفرع الأول
+        </button>
+
     </div>
 
     <hr>
+
+    <!-- الفرع الثاني -->
     <div class="branch-settings-card">
+
         <h3>الفرع الثاني - زملكا</h3>
-        <label for="branch2-address">عنوان الفرع الثاني</label>
-        <input id="branch2-address" type="text" value="زملكا ـ الساحة">
-        <label for="branch2-qr">باركود شام كاش للفرع الثاني</label>
-        <input id="branch2-qr" type="file" accept="image/jpeg,image/png,image/webp">
-        <img id="branch2-qr-preview" alt="معاينة باركود الفرع الثاني" hidden width="180">
-        <button type="button" id="save-branch2">حفظ بيانات الفرع الثاني</button>
+
+        <label for="branch2-name">اسم الفرع</label>
+        <input
+            id="branch2-name"
+            type="text"
+            value="lujain flowers"
+        >
+
+        <label for="branch2-whatsapp">رقم واتساب الفرع</label>
+        <input
+            id="branch2-whatsapp"
+            type="tel"
+            value="0960050019"
+        >
+
+        <label for="branch2-address">عنوان الفرع</label>
+        <input
+            id="branch2-address"
+            type="text"
+            value="زملكا ـ الساحة"
+        >
+
+        <label for="branch2-map">رابط موقع الفرع على Google Maps</label>
+        <input
+            id="branch2-map"
+            type="url"
+            value="https://maps.app.goo.gl/npnmSkT8vBMo8kEN7"
+        >
+
+        <label for="branch2-qr">باركود شام كاش</label>
+        <input
+            id="branch2-qr"
+            type="file"
+            accept="image/jpeg,image/png,image/webp"
+        >
+
+        <img
+            id="branch2-qr-preview"
+            alt="معاينة باركود الفرع الثاني"
+            hidden
+            width="180"
+        >
+
+        <button type="button" id="save-branch2">
+            حفظ بيانات الفرع الثاني
+        </button>
+
     </div>
 
 </section>

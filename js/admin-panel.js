@@ -1,5 +1,4 @@
 import { auth, db, app } from "./firebase.js";
-import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
 
 import {
     collection,
@@ -18,7 +17,19 @@ import {
   where,
   writeBatch
 } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
+// التحقق من صلاحية المدير قبل تشغيل لوحة التحكم
+await auth.authStateReady();
 
+const currentUser = auth.currentUser;
+
+if (
+    !currentUser ||
+    currentUser.email !== "salerflowerlg@gmail.com"
+) {
+    alert("ليس لديك صلاحية الدخول إلى لوحة التحكم.");
+    window.location.replace("admin.html");
+    throw new Error("Unauthorized admin access");
+}
 console.log("Firebase Project ID:", app.options.projectId);
 
 // =====================================
@@ -984,28 +995,33 @@ async function migrateCategoriesToV2() {
 // ==========================================
 
 async function loadBranchSettings() {
-    // بيانات التواصل مشتركة. نقرأ المستند الجديد أولاً، ثم نستخدم بيانات الفرع الأول القديمة كترحيل تلقائي.
-    try {
-        const sharedRef = doc(db, "settings", "shared");
-        const sharedSnapshot = await getDocFromServer(sharedRef);
-        let shared = sharedSnapshot.exists() ? sharedSnapshot.data() : {};
-        if (!sharedSnapshot.exists()) {
-            const legacy = await getDocFromServer(doc(db, "branches", "branch1"));
-            if (legacy.exists()) shared = legacy.data();
-        }
-        document.getElementById("shared-whatsapp").value = shared.whatsapp || "0966242463";
-        document.getElementById("shared-map").value = shared.mapUrl || "https://maps.app.goo.gl/gE4aAF8Uhq7jATkg7";
-    } catch (error) {
-        console.error("Shared settings load error:", error);
-    }
+    const branches = ["branch1", "branch2"];
 
-    for (const branchId of ["branch1", "branch2"]) {
+    for (const branchId of branches) {
         try {
-            const snapshot = await getDocFromServer(doc(db, "branches", branchId));
+            const branchRef = doc(db, "branches", branchId);
+            const snapshot = await getDocFromServer(branchRef);
+
             if (!snapshot.exists()) continue;
+
             const branch = snapshot.data();
-            document.getElementById(`${branchId}-address`).value = branch.address || "";
-            const preview = document.getElementById(`${branchId}-qr-preview`);
+
+            document.getElementById(`${branchId}-name`).value =
+                branch.name || "";
+
+            document.getElementById(`${branchId}-whatsapp`).value =
+                branch.whatsapp || "";
+
+            document.getElementById(`${branchId}-address`).value =
+                branch.address || "";
+
+            document.getElementById(`${branchId}-map`).value =
+                branch.mapUrl || "";
+
+            const preview = document.getElementById(
+                `${branchId}-qr-preview`
+            );
+
             if (preview && branch.shamCashQrUrl) {
                 preview.src = branch.shamCashQrUrl;
                 preview.hidden = false;
@@ -1016,87 +1032,158 @@ async function loadBranchSettings() {
     }
 }
 
+
+// ==========================================
 // معاينة باركود شام كاش
+// ==========================================
+
 ["branch1", "branch2"].forEach(branchId => {
     const input = document.getElementById(`${branchId}-qr`);
     const preview = document.getElementById(`${branchId}-qr-preview`);
+
     if (!input || !preview) return;
+
     input.addEventListener("change", function () {
         const file = this.files[0];
         if (!file) return;
+
         if (!["image/jpeg", "image/png", "image/webp"].includes(file.type)) {
-            alert("يرجى اختيار صورة JPG أو PNG أو WebP."); this.value = ""; return;
+            alert("يرجى اختيار صورة JPG أو PNG أو WebP.");
+            this.value = "";
+            return;
         }
+
         if (file.size > 5 * 1024 * 1024) {
-            alert("حجم صورة الباركود يجب ألا يتجاوز 5 ميغابايت."); this.value = ""; return;
+            alert("حجم صورة الباركود يجب ألا يتجاوز 5 ميغابايت.");
+            this.value = "";
+            return;
         }
+
         preview.src = URL.createObjectURL(file);
         preview.hidden = false;
     });
 });
 
-// حفظ بيانات التواصل المشتركة بين الفرعين
-async function saveSharedSettings() {
-    const whatsapp = document.getElementById("shared-whatsapp").value.trim();
-    const mapUrl = document.getElementById("shared-map").value.trim();
-    const button = document.getElementById("save-shared-settings");
-    if (!whatsapp || !mapUrl) { alert("يرجى إدخال رقم واتساب ورابط الخريطة."); return; }
-    button.disabled = true;
-    try {
-        await setDoc(doc(db, "settings", "shared"), { whatsapp, mapUrl, updatedAt: serverTimestamp() }, { merge: true });
-        alert("تم حفظ بيانات التواصل المشتركة للفرعين.");
-    } catch (error) {
-        console.error("Shared settings save error:", error);
-        alert("تعذر حفظ بيانات التواصل: " + error.message);
-    } finally { button.disabled = false; }
-}
-document.getElementById("save-shared-settings")?.addEventListener("click", saveSharedSettings);
 
-// حفظ عنوان وباركود كل فرع فقط
+// ==========================================
+// حفظ بيانات الفرع
+// ==========================================
+
 async function saveBranchSettings(branchId) {
+    const name = document.getElementById(`${branchId}-name`).value.trim();
+    const whatsapp = document.getElementById(`${branchId}-whatsapp`).value.trim();
     const address = document.getElementById(`${branchId}-address`).value.trim();
+    const mapUrl = document.getElementById(`${branchId}-map`).value.trim();
+
     const qrInput = document.getElementById(`${branchId}-qr`);
     const saveButton = document.getElementById(`save-${branchId}`);
-    if (!address) { alert("يرجى إدخال عنوان الفرع."); return; }
+
+    if (!name || !whatsapp || !address || !mapUrl) {
+        alert("يرجى تعبئة جميع بيانات الفرع.");
+        return;
+    }
+
     const branchRef = doc(db, "branches", branchId);
+
     let uploadedQr = null;
     let saved = false;
+
     try {
         saveButton.disabled = true;
         saveButton.textContent = "جارٍ الحفظ...";
+
         const oldSnapshot = await getDocFromServer(branchRef);
-        const oldBranch = oldSnapshot.exists() ? oldSnapshot.data() : {};
+        const oldBranch = oldSnapshot.exists()
+            ? oldSnapshot.data()
+            : {};
+
         const qrFile = qrInput.files[0];
-        if (qrFile) uploadedQr = await uploadProductImage(qrFile);
+
+        if (qrFile) {
+            uploadedQr = await uploadProductImage(qrFile);
+        }
+
         const branchData = {
+            name,
+            whatsapp,
             address,
-            shamCashQrUrl: uploadedQr ? uploadedQr.url : oldBranch.shamCashQrUrl || "",
-            shamCashQrPath: uploadedQr ? uploadedQr.path : oldBranch.shamCashQrPath || "",
+            mapUrl,
+
+            shamCashQrUrl: uploadedQr
+                ? uploadedQr.url
+                : oldBranch.shamCashQrUrl || "",
+
+            shamCashQrPath: uploadedQr
+                ? uploadedQr.path
+                : oldBranch.shamCashQrPath || "",
+
             updatedAt: serverTimestamp()
         };
+
         await setDoc(branchRef, branchData, { merge: true });
         saved = true;
-        if (uploadedQr && oldBranch.shamCashQrPath && oldBranch.shamCashQrPath !== uploadedQr.path) {
-            try { await deleteProductImages([oldBranch.shamCashQrPath]); }
-            catch (deleteError) { console.error("Old QR deletion error:", deleteError); }
+
+        if (
+            uploadedQr &&
+            oldBranch.shamCashQrPath &&
+            oldBranch.shamCashQrPath !== uploadedQr.path
+        ) {
+            try {
+                await deleteProductImages([oldBranch.shamCashQrPath]);
+            } catch (deleteError) {
+                console.error("Old QR deletion error:", deleteError);
+            }
         }
+
         qrInput.value = "";
+
         const preview = document.getElementById(`${branchId}-qr-preview`);
-        if (preview && branchData.shamCashQrUrl) { preview.src = branchData.shamCashQrUrl; preview.hidden = false; }
-        alert("تم حفظ عنوان وباركود الفرع بنجاح.");
+
+        if (preview && branchData.shamCashQrUrl) {
+            preview.src = branchData.shamCashQrUrl;
+            preview.hidden = false;
+        }
+
+        alert("تم حفظ بيانات الفرع بنجاح.");
+
     } catch (error) {
         console.error("Branch save error:", error);
-        if (uploadedQr && !saved) { try { await deleteProductImages([uploadedQr.path]); } catch (e) { console.error(e); } }
+
+        if (uploadedQr && !saved) {
+            try {
+                await deleteProductImages([uploadedQr.path]);
+            } catch (cleanupError) {
+                console.error("QR cleanup error:", cleanupError);
+            }
+        }
+
         alert("تعذر حفظ بيانات الفرع: " + error.message);
+
     } finally {
         saveButton.disabled = false;
-        saveButton.textContent = branchId === "branch1" ? "حفظ بيانات الفرع الأول" : "حفظ بيانات الفرع الثاني";
+
+        saveButton.textContent =
+            branchId === "branch1"
+                ? "حفظ بيانات الفرع الأول"
+                : "حفظ بيانات الفرع الثاني";
     }
 }
 
-document.getElementById("save-branch1")?.addEventListener("click", () => saveBranchSettings("branch1"));
-document.getElementById("save-branch2")?.addEventListener("click", () => saveBranchSettings("branch2"));
 
+// ==========================================
+// ربط أزرار حفظ الفرعين
+// ==========================================
+
+document.getElementById("save-branch1")?.addEventListener(
+    "click",
+    () => saveBranchSettings("branch1")
+);
+
+document.getElementById("save-branch2")?.addEventListener(
+    "click",
+    () => saveBranchSettings("branch2")
+);
+console.log("وصل التنفيذ إلى نهاية admin-panel.js");
 // ==========================================
 // تحويل الصور المرفوعة إلى منتجات
 // ==========================================
@@ -1288,13 +1375,6 @@ if (convertImagesButton) {
 
   });
 }
-onAuthStateChanged(auth, async (user) => {
-    if (!user || (user.email || "").toLowerCase() !== "salerflowerlg@gmail.com") {
-        try { if (user) await signOut(auth); } catch (error) { console.error("Sign-out error:", error); }
-        window.location.replace("admin.html");
-        return;
-    }
-    loadAdminCategories();
-    loadAdminProducts();
-    loadBranchSettings();
-});
+loadAdminCategories();
+loadAdminProducts();
+loadBranchSettings();
