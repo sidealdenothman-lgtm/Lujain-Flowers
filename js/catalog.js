@@ -15,6 +15,8 @@ import {
 let categories = {};
 let products = [];
 let currentBranchId = "";
+let currentCategory = "all";
+
 // إظهار لوحة التحكم للمدير فقط
 const adminPanelLink = document.getElementById("admin-panel-link");
 
@@ -111,6 +113,7 @@ whatsapp.href = phone
 // عناصر صفحة الكتالوج
 const productsGrid = document.getElementById("products-grid");
 const productsTitle = document.getElementById("products-title");
+const productSearch = document.getElementById("product-search");
 
 // قراءة الأقسام من Firestore
 // قراءة الأقسام من Firestore
@@ -198,12 +201,31 @@ async function loadProducts() {
 
 // عرض المنتجات
 function displayProducts(category = "all") {
+    currentCategory = category;
     if (!productsGrid) return;
 
-    const filteredProducts = category === "all"
-        ? products
-        : products.filter(product => product.category === category);
+    const searchText = productSearch
+    ? productSearch.value.trim().toLowerCase()
+    : "";
 
+const filteredProducts = products.filter(product => {
+    const categoryAliases = {
+    "car-decor": ["car-decor", "cars"],
+    "cars": ["cars", "car-decor"]
+};
+
+const matchingCategoryIds =
+    categoryAliases[category] || [category];
+
+const matchesCategory =
+    category === "all" ||
+    matchingCategoryIds.includes(product.category);
+    const matchesSearch =
+        product.name.toLowerCase().includes(searchText) ||
+        product.description.toLowerCase().includes(searchText);
+
+    return matchesCategory && matchesSearch;
+});
     productsGrid.innerHTML = "";
 
     if (productsTitle) {
@@ -257,6 +279,13 @@ card.addEventListener("click", function () {
 
         card.append(title, description);
         productsGrid.appendChild(card);
+    });
+}
+// البحث الفوري أثناء الكتابة
+
+if (productSearch) {
+    productSearch.addEventListener("input", function () {
+        displayProducts(currentCategory);
     });
 }
 
