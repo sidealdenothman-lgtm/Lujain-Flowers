@@ -1039,3 +1039,94 @@ body {
     border-color: #8b5a2b;
     box-shadow: 0 0 8px rgba(196, 154, 82, 0.25);
 }
+/* =========================================
+   باركود مواقع التواصل الاجتماعي
+   LUJAIN FLOWERS
+========================================= */
+
+.branch-social {
+    max-width: 600px;
+    margin: 30px auto 15px;
+    padding: 25px 18px;
+
+    text-align: center;
+
+    background: rgba(255, 250, 242, 0.75);
+    border: 1px solid #d8bd91;
+    border-radius: 18px;
+
+    box-shadow: 0 5px 16px rgba(70, 45, 25, 0.08);
+}
+
+.branch-social > h3 {
+    color: #99713d;
+    font-size: 20px;
+    line-height: 1.8;
+    margin-bottom: 22px;
+}
+
+.social-qr-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 25px;
+    flex-wrap: wrap;
+}
+
+.social-qr-card {
+    width: 210px;
+    max-width: 100%;
+    padding: 15px;
+
+    background: #fffdf9;
+    border: 1px solid #e6d2b5;
+    border-radius: 15px;
+
+    box-shadow: 0 3px 12px rgba(90, 60, 30, 0.08);
+}
+
+.social-qr-card h4 {
+    margin-bottom: 12px;
+    font-size: 17px;
+    font-weight: bold;
+}
+
+.social-qr-card:first-child h4 {
+    color: #185bbd;
+}
+
+.social-qr-card:last-child h4 {
+    color: #a34e7c;
+}
+
+.social-qr-card img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    height: auto;
+    object-fit: contain;
+    background: #fff;
+    border-radius: 8px;
+}
+
+/* تحسين عرض الباركودين على الهاتف */
+@media (max-width: 480px) {
+
+    .branch-social {
+        padding: 20px 12px;
+        margin: 25px auto 15px;
+    }
+
+    .branch-social > h3 {
+        font-size: 17px;
+    }
+
+    .social-qr-container {
+        gap: 15px;
+    }
+
+    .social-qr-card {
+        width: min(100%, 230px);
+        padding: 12px;
+    }
+}
